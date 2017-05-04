@@ -1,0 +1,34 @@
+# 
+# Wavefront material file
+# Converted by 3D Exploration 1.7 beta
+# XDimension Software, LLC
+# http://www.xdsoft.com/explorer/
+# 
+newmtl EyeWhite
+	 Ka 0 0 0
+	 Kd 0.800177 0.771471 0.771471
+	 Ks 0.647137 0.623922 0.623922
+	 illum 2
+	 Ns 68.5935
+	 map_Kd D:\Program Files\NewTek\LightWave 3D 9.3\Objects\_HumanEye\HumanEye\Maps\HE_GreenEyeTx.jpg
+newmtl EyePupil
+	 Ka 0 0 0
+	 Kd 0.160588 0.192706 0.220235
+	 Ks 0.19902 0.238824 0.272941
+	 illum 2
+	 Ns 8
+	 map_Kd D:\Program Files\NewTek\LightWave 3D 9.3\Objects\_HumanEye\HumanEye\Maps\HE_GreenEyeTx.jpg
+newmtl EyeBall
+	 Ka 0 0 0
+	 Kd 0.356863 0.45098 0.45098
+	 Ks 0.264078 0.333725 0.333725
+	 illum 2
+	 Ns 68.5935
+	 map_Kd D:\Program Files\NewTek\LightWave 3D 9.3\Objects\_HumanEye\HumanEye\Maps\HE_GreenEyeTx.jpg
+newmtl EyeIris
+	 Ka 0 0 0
+	 Kd 0.395294 0.471059 0.467765
+	 Ks 0.289412 0.344882 0.342471
+	 illum 2
+	 Ns 39.3966
+	 map_Kd D:\Program Files\NewTek\LightWave 3D 9.3\Objects\_HumanEye\HumanEye\Maps\HE_GreenEyeTx.jpg
