@@ -1,0 +1,185 @@
+fileFormatVersion: 2
+guid: 8262163150ef0ee4f93817ea01aafb16
+timeCreated: 1494090710
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: gold cur10
+    100004: gold cur11
+    100006: gold cur12
+    100008: gold cur13
+    100010: gold cur14
+    100012: gold cur15
+    100014: gold cur16
+    100016: gold cur17
+    100018: gold cur18
+    100020: gold cur19
+    100022: gold cur20
+    100024: gold cur21
+    100026: gold cur22
+    100028: gold cur23
+    100030: gold curv0
+    100032: gold curv1
+    100034: gold curv2
+    100036: gold curv3
+    100038: gold curv4
+    100040: gold curv5
+    100042: gold curv6
+    100044: gold curv7
+    100046: gold curv8
+    100048: gold curv9
+    100050: gold curve
+    100052: Layer0_001
+    400000: //RootNode
+    400002: gold cur10
+    400004: gold cur11
+    400006: gold cur12
+    400008: gold cur13
+    400010: gold cur14
+    400012: gold cur15
+    400014: gold cur16
+    400016: gold cur17
+    400018: gold cur18
+    400020: gold cur19
+    400022: gold cur20
+    400024: gold cur21
+    400026: gold cur22
+    400028: gold cur23
+    400030: gold curv0
+    400032: gold curv1
+    400034: gold curv2
+    400036: gold curv3
+    400038: gold curv4
+    400040: gold curv5
+    400042: gold curv6
+    400044: gold curv7
+    400046: gold curv8
+    400048: gold curv9
+    400050: gold curve
+    400052: Layer0_001
+    2300000: gold cur10
+    2300002: gold cur11
+    2300004: gold cur12
+    2300006: gold cur13
+    2300008: gold cur14
+    2300010: gold cur15
+    2300012: gold cur16
+    2300014: gold cur17
+    2300016: gold cur18
+    2300018: gold cur19
+    2300020: gold cur20
+    2300022: gold cur21
+    2300024: gold cur22
+    2300026: gold cur23
+    2300028: gold curv0
+    2300030: gold curv1
+    2300032: gold curv2
+    2300034: gold curv3
+    2300036: gold curv4
+    2300038: gold curv5
+    2300040: gold curv6
+    2300042: gold curv7
+    2300044: gold curv8
+    2300046: gold curv9
+    2300048: gold curve
+    2300050: Layer0_001
+    3300000: gold cur10
+    3300002: gold cur11
+    3300004: gold cur12
+    3300006: gold cur13
+    3300008: gold cur14
+    3300010: gold cur15
+    3300012: gold cur16
+    3300014: gold cur17
+    3300016: gold cur18
+    3300018: gold cur19
+    3300020: gold cur20
+    3300022: gold cur21
+    3300024: gold cur22
+    3300026: gold cur23
+    3300028: gold curv0
+    3300030: gold curv1
+    3300032: gold curv2
+    3300034: gold curv3
+    3300036: gold curv4
+    3300038: gold curv5
+    3300040: gold curv6
+    3300042: gold curv7
+    3300044: gold curv8
+    3300046: gold curv9
+    3300048: gold curve
+    3300050: Layer0_001
+    4300000: gold curve
+    4300002: Layer0_001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
