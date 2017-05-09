@@ -17,7 +17,6 @@
 #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
 using UnityEngine;
-using System;
 
 using Gvr;
 
@@ -30,7 +29,6 @@ namespace Gvr.Internal {
   /// so they are not redundantly documented here.
   class ControllerState {
     internal GvrConnectionState connectionState = GvrConnectionState.Disconnected;
-    internal GvrControllerApiStatus apiStatus = GvrControllerApiStatus.Unavailable;
     internal Quaternion orientation = Quaternion.identity;
     internal Vector3 gyro = Vector3.zero;
     internal Vector3 accel = Vector3.zero;
@@ -49,19 +47,10 @@ namespace Gvr.Internal {
     internal bool appButtonDown = false;
     internal bool appButtonUp = false;
 
-    // Always false for the emulator.
-    internal bool homeButtonDown = false;
-    internal bool homeButtonState = false;
-
     internal string errorDetails = "";
-    internal IntPtr gvrPtr = IntPtr.Zero;
-
-    internal bool isCharging = false;
-    internal GvrControllerBatteryLevel batteryLevel = GvrControllerBatteryLevel.Unknown;
 
     public void CopyFrom(ControllerState other) {
       connectionState = other.connectionState;
-      apiStatus = other.apiStatus;
       orientation = other.orientation;
       gyro = other.gyro;
       accel = other.accel;
@@ -77,12 +66,7 @@ namespace Gvr.Internal {
       appButtonState = other.appButtonState;
       appButtonDown = other.appButtonDown;
       appButtonUp = other.appButtonUp;
-      homeButtonDown = other.homeButtonDown;
-      homeButtonState = other.homeButtonState;
       errorDetails = other.errorDetails;
-      gvrPtr = other.gvrPtr;
-      isCharging = other.isCharging;
-      batteryLevel = other.batteryLevel;
     }
 
     /// Resets the transient state (the state variables that represent events, and which are true
@@ -95,8 +79,6 @@ namespace Gvr.Internal {
       clickButtonUp = false;
       appButtonDown = false;
       appButtonUp = false;
-      homeButtonDown = false;
-      homeButtonState = false;
     }
   }
 }

@@ -25,18 +25,12 @@ namespace Gvr.Internal {
     private static readonly Vector3 neckOffset = new Vector3(0, 0.075f, 0.08f);
 
     // Use mouse to emulate head in the editor.
-    // These variables must be static so that head pose is maintained between scene changes,
-    // as it is on device.
-    private static float mouseX = 0;
-    private static float mouseY = 0;
-    private static float mouseZ = 0;
+    private float mouseX = 0;
+    private float mouseY = 0;
+    private float mouseZ = 0;
 
     public override void Init() {
       Input.gyro.enabled = true;
-    }
-
-    public override bool SupportsNativeDistortionCorrection(List<string> diagnostics) {
-      return false;  // No need for diagnostic message.
     }
 
     public override bool SupportsNativeUILayer(List<string> diagnostics) {
@@ -46,7 +40,6 @@ namespace Gvr.Internal {
     // Since we can check all these settings by asking Gvr.Instance, no need
     // to keep a separate copy here.
     public override void SetVRModeEnabled(bool enabled) {}
-    public override void SetDistortionCorrectionEnabled(bool enabled) {}
     public override void SetNeckModelScale(float scale) {}
 
     private Quaternion initialRotation = Quaternion.identity;
@@ -95,10 +88,6 @@ namespace Gvr.Internal {
       tilted = Input.GetKeyUp(KeyCode.Escape);
     }
 
-    public override void PostRender(RenderTexture stereoScreen) {
-      // Do nothing.
-    }
-
     public override void UpdateScreenData() {
       Profile = GvrProfile.GetKnownProfile(GvrViewer.Instance.ScreenSize, GvrViewer.Instance.ViewerType);
       ComputeEyesFromProfile();
@@ -107,6 +96,9 @@ namespace Gvr.Internal {
 
     public override void Recenter() {
       mouseX = mouseZ = 0;  // Do not reset pitch, which is how it works on the phone.
+      if (RemoteCommunicating) {
+        //initialRotation = Quaternion.Inverse(Input.gyro.attitude);
+      }
     }
   }
 }

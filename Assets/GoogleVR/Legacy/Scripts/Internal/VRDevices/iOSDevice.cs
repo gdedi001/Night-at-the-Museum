@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#if UNITY_IOS && !UNITY_HAS_GOOGLEVR
+#if UNITY_IOS
 
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -22,15 +22,6 @@ namespace Gvr.Internal {
   public class iOSDevice : GvrDevice {
     // Native code libraries use OpenGL, but Unity picks Metal for iOS by default.
     bool isOpenGL = false;
-
-    public override bool SupportsNativeDistortionCorrection(List<string> diagnostics) {
-      bool support = base.SupportsNativeDistortionCorrection(diagnostics);
-      if (!isOpenGL) {
-        diagnostics.Add("Requires OpenGL");
-        support = false;
-      }
-      return support;
-    }
 
     public override void SetVRModeEnabled(bool enabled) {
       setVRModeEnabled(enabled);
@@ -57,5 +48,4 @@ namespace Gvr.Internal {
 }
 /// @endcond
 
-#endif  // UNITY_IOS && !UNITY_HAS_GOOGLEVR
-
+#endif

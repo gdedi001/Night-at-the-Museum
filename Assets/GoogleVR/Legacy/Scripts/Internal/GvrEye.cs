@@ -180,7 +180,7 @@ public class GvrEye : MonoBehaviour {
     }
 
     // Pass necessary information to any shaders doing distortion correction.
-    if (GvrViewer.Instance.DistortionCorrection == GvrViewer.DistortionCorrectionMethod.None) {
+    if (!GvrViewer.Instance.DistortionCorrectionEnabled) {
       // Correction matrix for use in surface shaders that do vertex warping for distortion.
       // Have to compute it every frame because cameraToWorldMatrix is changing constantly.
       var fixProj = cam.cameraToWorldMatrix *
@@ -200,19 +200,12 @@ public class GvrEye : MonoBehaviour {
       return;
     }
     SetupStereo(/*forceUpdate=*/false);
-    bool doStereoEffect = GvrViewer.Instance.StereoScreen != null;
-#if UNITY_IOS
-    doStereoEffect &= !controller.directRender;
-#endif  // UNITY_IOS
-    if (doStereoEffect) {
+    if (!controller.directRender && GvrViewer.Instance.StereoScreen != null) {
       // Some image effects clobber the whole screen.  Add a final image effect to the chain
       // which restores side-by-side stereo.
       stereoEffect = GetComponent<StereoRenderEffect>();
       if (stereoEffect == null) {
         stereoEffect = gameObject.AddComponent<StereoRenderEffect>();
-#if UNITY_5_6_OR_NEWER
-        stereoEffect.eye = eye;
-#endif  // UNITY_5_6_OR_NEWER
       }
       stereoEffect.enabled = true;
     } else if (stereoEffect != null) {

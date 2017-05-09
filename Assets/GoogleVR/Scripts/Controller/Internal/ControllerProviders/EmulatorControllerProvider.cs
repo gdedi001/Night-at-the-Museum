@@ -34,7 +34,8 @@ namespace Gvr.Internal {
     private Quaternion lastRawOrientation = Quaternion.identity;
 
     /// Creates a new EmulatorControllerProvider with the specified settings.
-    internal EmulatorControllerProvider(GvrController.EmulatorConnectionMode connectionMode) {
+    internal EmulatorControllerProvider(GvrController.EmulatorConnectionMode connectionMode,
+          bool enableGyro, bool enableAccel) {
       if (connectionMode == GvrController.EmulatorConnectionMode.USB) {
         EmulatorConfig.Instance.PHONE_EVENT_MODE = EmulatorConfig.Mode.USB;
       } else if (connectionMode == GvrController.EmulatorConnectionMode.WIFI) {
@@ -46,21 +47,20 @@ namespace Gvr.Internal {
       EmulatorManager.Instance.touchEventListeners += HandleTouchEvent;
       EmulatorManager.Instance.orientationEventListeners += HandleOrientationEvent;
       EmulatorManager.Instance.buttonEventListeners += HandleButtonEvent;
-      EmulatorManager.Instance.gyroEventListeners += HandleGyroEvent;
-      EmulatorManager.Instance.accelEventListeners += HandleAccelEvent;
+
+      if (enableGyro) {
+        EmulatorManager.Instance.gyroEventListeners += HandleGyroEvent;
+      }
+
+      if (enableAccel) {
+        EmulatorManager.Instance.accelEventListeners += HandleAccelEvent;
+      }
     }
 
     public void ReadState(ControllerState outState) {
       lock (state) {
         state.connectionState = EmulatorManager.Instance.Connected ? GvrConnectionState.Connected :
             GvrConnectionState.Connecting;
-        state.apiStatus = EmulatorManager.Instance.Connected ? GvrControllerApiStatus.Ok :
-            GvrControllerApiStatus.Unavailable;
-
-        // During emulation, just assume the controller is fully charged
-        state.isCharging = false;
-        state.batteryLevel = GvrControllerBatteryLevel.Full;
-
         outState.CopyFrom(state);
       }
       state.ClearTransientState();

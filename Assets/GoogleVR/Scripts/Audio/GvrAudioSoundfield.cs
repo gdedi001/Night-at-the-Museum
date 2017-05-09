@@ -20,8 +20,6 @@ using System.Collections;
 // audio sample should be in Ambix (ACN-SN3D) format.
 [AddComponentMenu("GoogleVR/Audio/GvrAudioSoundfield")]
 public class GvrAudioSoundfield : MonoBehaviour {
-  /// Denotes whether the room effects should be bypassed.
-  public bool bypassRoomEffects = true;
 
   /// Input gain in decibels.
   public float gainDb = 0.0f;
@@ -197,8 +195,6 @@ public class GvrAudioSoundfield : MonoBehaviour {
     for (int channelSet = 0; channelSet < audioSources.Length; ++channelSet) {
       GameObject channelSetObject = new GameObject("Channel Set " + channelSet);
       channelSetObject.transform.parent = gameObject.transform;
-      channelSetObject.transform.localPosition = Vector3.zero;
-      channelSetObject.transform.localRotation = Quaternion.identity;
       channelSetObject.hideFlags = HideFlags.HideAndDontSave;
       audioSources[channelSet] = channelSetObject.AddComponent<AudioSource>();
       audioSources[channelSet].enabled = false;
@@ -206,9 +202,6 @@ public class GvrAudioSoundfield : MonoBehaviour {
       audioSources[channelSet].bypassReverbZones = true;
       audioSources[channelSet].dopplerLevel = 0.0f;
       audioSources[channelSet].spatialBlend = 0.0f;
-#if UNITY_5_5_OR_NEWER
-      audioSources[channelSet].spatializePostEffects = true;
-#endif  // UNITY_5_5_OR_NEWER
       audioSources[channelSet].outputAudioMixerGroup = mixer.FindMatchingGroups("Master")[0];
     }
     OnValidate();
@@ -242,25 +235,13 @@ public class GvrAudioSoundfield : MonoBehaviour {
     }
   }
 
-  void OnApplicationPause (bool pauseStatus) {
-    if (pauseStatus) {
-      Pause();
-    } else {
-      UnPause();
-    }
-  }
-
   void Update () {
     // Update soundfield.
     if (!isPlaying && !isPaused) {
       Stop();
     } else {
-      for (int channelSet = 0; channelSet < audioSources.Length; ++channelSet) {
-        audioSources[channelSet].SetSpatializerFloat((int) GvrAudio.SpatializerData.Gain,
-                                                     GvrAudio.ConvertAmplitudeFromDb(gainDb));
-      }
+      GvrAudio.UpdateAudioSoundfield(id, transform, gainDb);
     }
-    GvrAudio.UpdateAudioSoundfield(id, this);
   }
 
   void OnValidate () {
@@ -335,7 +316,7 @@ public class GvrAudioSoundfield : MonoBehaviour {
     if (id < 0) {
       id = GvrAudio.CreateAudioSoundfield();
       if (id >= 0) {
-        GvrAudio.UpdateAudioSoundfield(id, this);
+        GvrAudio.UpdateAudioSoundfield(id, transform, gainDb);
         for (int channelSet = 0; channelSet < audioSources.Length; ++channelSet) {
           InitializeChannelSet(audioSources[channelSet], channelSet);
         }
@@ -358,24 +339,15 @@ public class GvrAudioSoundfield : MonoBehaviour {
   // Initializes given channel set of the soundfield.
   private void InitializeChannelSet(AudioSource source, int channelSet) {
     source.spatialize = true;
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.Type,
-                               (float) GvrAudio.SpatializerType.Soundfield);
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.NumChannels,
-                               (float) GvrAudio.numFoaChannels);
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.ChannelSet, (float) channelSet);
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.Gain,
-                               GvrAudio.ConvertAmplitudeFromDb(gainDb));
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.ZeroOutput, 0.0f);
-    // Soundfield id must be set after all the spatializer parameters, to ensure that the soundfield
-    // is properly initialized before processing.
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.Id, (float) id);
+    source.SetSpatializerFloat(0, (float)id);
+    source.SetSpatializerFloat(1, (float)GvrAudio.SpatializerType.Soundfield);
+    source.SetSpatializerFloat(2, (float)GvrAudio.numFoaChannels);
+    source.SetSpatializerFloat(3, (float)channelSet);
   }
 
   // Shuts down given channel set of the soundfield.
   private void ShutdownChannelSet(AudioSource source, int channelSet) {
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.Id, -1.0f);
-    // Ensure that the output is zeroed after shutdown.
-    source.SetSpatializerFloat((int) GvrAudio.SpatializerData.ZeroOutput, 1.0f);
+    source.SetSpatializerFloat(0, -1.0f);
     source.spatialize = false;
   }
 }

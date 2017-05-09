@@ -35,10 +35,11 @@ namespace Gvr.Internal {
         return new DummyControllerProvider();
       }
       // Use the Controller Emulator.
-      return new EmulatorControllerProvider(owner.emulatorConnectionMode);
+      return new EmulatorControllerProvider(owner.emulatorConnectionMode, owner.enableGyro,
+          owner.enableAccel);
 #elif UNITY_ANDROID
       // Use the GVR C API.
-      return new AndroidNativeControllerProvider();
+      return new AndroidNativeControllerProvider(owner.enableGyro, owner.enableAccel);
 #else
       // Platform not supported.
       Debug.LogWarning("No controller support on this platform.");

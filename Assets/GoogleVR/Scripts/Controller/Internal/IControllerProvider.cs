@@ -14,7 +14,7 @@
 
 // The controller is not available for versions of Unity without the
 // // GVR native integration.
-using System;
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
 /// @cond
 namespace Gvr.Internal {
@@ -25,7 +25,6 @@ namespace Gvr.Internal {
   /// communicates with the controller emulator via USB or WiFi. If running on a real
   /// Android device, we use an implementation that uses the underlying Daydream controller API.
   interface IControllerProvider {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     /// Notifies the controller provider that the application has paused.
     void OnPause();
 
@@ -34,8 +33,8 @@ namespace Gvr.Internal {
 
     /// Reads the controller's current state and stores it in outState.
     void ReadState(ControllerState outState);
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 }
 /// @endcond
 
+#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)

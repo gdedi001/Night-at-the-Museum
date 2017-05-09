@@ -11,14 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_IOS)
+#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID
 
 using UnityEngine;
 using UnityEngine.VR;
 
 /// @cond
 namespace Gvr.Internal {
-  public class UnityVRDevice : BaseVRDevice {
+  public class UnityVRDevice : GvrDevice {
 
     public override void Init() { }
 
@@ -27,11 +27,8 @@ namespace Gvr.Internal {
     }
 
     public override void ShowSettingsDialog() { }
-    public override void SetDistortionCorrectionEnabled(bool enabled) { }
+    public override void OnPause(bool pause) { }
     public override void SetNeckModelScale(float scale) { }
-    public override void UpdateScreenData() { }
-    public override void PostRender(RenderTexture stereoScreen) { }
-
     public override bool SetDefaultDeviceProfile(System.Uri uri) {
       return false;
     }
@@ -41,17 +38,18 @@ namespace Gvr.Internal {
       this.headPose.Set(InputTracking.GetLocalPosition(VRNode.Head),
           InputTracking.GetLocalRotation(VRNode.Head));
     }
+    public override void UpdateScreenData() { }
 
     public override void Recenter() {
       InputTracking.Recenter();
     }
 
-    public override void OnPause(bool pause) { }
-    public override void OnApplicationQuit() { }
+    protected override void ProcessEvents() { }
 
     private void SetApplicationState() { }
+
   }
 }
 /// @endcond
 
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_IOS)
+#endif  // UNITY_HAS_GOOGLEVR && UNITY_ANDROID
