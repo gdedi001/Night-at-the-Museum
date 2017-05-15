@@ -29,8 +29,6 @@ using Gvr.Internal;
 /// its starting properties.
 [AddComponentMenu("GoogleVR/GvrViewer")]
 public class GvrViewer : MonoBehaviour {
-  public const string GVR_SDK_VERSION = "1.0";
-
   /// The singleton instance of the GvrViewer class.
   public static GvrViewer Instance {
     get {
@@ -105,23 +103,45 @@ public class GvrViewer : MonoBehaviour {
 #endif  // !UNITY_HAS_GOOGLEVR || UNITY_EDITOR
     }
   }
+
+// Ignore private field is assigned but its value is never used compile warning.
+#pragma warning disable 414
   [SerializeField]
   private bool vrModeEnabled = true;
+#pragma warning restore 414
 
-  /// Determines whether distortion correction is enabled.
-  public bool DistortionCorrectionEnabled {
+  /// Methods for performing lens distortion correction.
+  public enum DistortionCorrectionMethod {
+      None,    ///< No distortion correction
+      Native,  ///< Use the native C++ plugin
+      Unity,   ///< Perform distortion correction in Unity (recommended)
+  }
+
+  /// Determines the distortion correction method used by the SDK to render the
+  /// #StereoScreen texture on the phone.  If _Native_ is selected but not supported
+  /// by the device, the _Unity_ method will be used instead.
+  public DistortionCorrectionMethod DistortionCorrection {
     get {
-      return distortionCorrectionEnabled;
+      return distortionCorrection;
     }
     set {
-      if (value != distortionCorrectionEnabled && device != null) {
+      if (device != null && device.RequiresNativeDistortionCorrection()) {
+        value = DistortionCorrectionMethod.Native;
+      }
+      if (value != distortionCorrection && device != null) {
+        device.SetDistortionCorrectionEnabled(value == DistortionCorrectionMethod.Native
+            && NativeDistortionCorrectionSupported);
         device.UpdateScreenData();
       }
-      distortionCorrectionEnabled = value;
+      distortionCorrection = value;
     }
   }
   [SerializeField]
-  private bool distortionCorrectionEnabled = true;
+#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+  private DistortionCorrectionMethod distortionCorrection = DistortionCorrectionMethod.Native;
+#else
+  private DistortionCorrectionMethod distortionCorrection = DistortionCorrectionMethod.Unity;
+#endif  // UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
 
   /// The native SDK will apply a neck offset to the head tracking, resulting in
   /// a more realistic model of a person's head position.  This control determines
@@ -191,6 +211,9 @@ public class GvrViewer : MonoBehaviour {
   // The VR device that will be providing input data.
   private static BaseVRDevice device;
 
+  /// Whether native distortion correction functionality is supported by the VR device.
+  public bool NativeDistortionCorrectionSupported { get; private set; }
+
   /// Whether the VR device supports showing a native UI layer, for example for settings.
   public bool NativeUILayerSupported { get; private set; }
 
@@ -219,7 +242,7 @@ public class GvrViewer : MonoBehaviour {
   public RenderTexture StereoScreen {
     get {
       // Don't need it except for distortion correction.
-      if (!distortionCorrectionEnabled || !VRModeEnabled) {
+      if (distortionCorrection == DistortionCorrectionMethod.None || !VRModeEnabled) {
         return null;
       }
       if (stereoScreen == null) {
@@ -341,6 +364,12 @@ public class GvrViewer : MonoBehaviour {
     device.Init();
 
     List<string> diagnostics = new List<string>();
+    NativeDistortionCorrectionSupported = device.SupportsNativeDistortionCorrection(diagnostics);
+    if (diagnostics.Count > 0) {
+      Debug.LogWarning("Built-in distortion correction disabled. Causes: ["
+                       + String.Join("; ", diagnostics.ToArray()) + "]");
+    }
+    diagnostics.Clear();
     NativeUILayerSupported = device.SupportsNativeUILayer(diagnostics);
     if (diagnostics.Count > 0) {
       Debug.LogWarning("Built-in UI layer disabled. Causes: ["
@@ -351,6 +380,8 @@ public class GvrViewer : MonoBehaviour {
       device.SetDefaultDeviceProfile(DefaultDeviceProfile);
     }
 
+    device.SetDistortionCorrectionEnabled(distortionCorrection == DistortionCorrectionMethod.Native
+        && NativeDistortionCorrectionSupported);
     device.SetNeckModelScale(neckModelScale);
 
 #if !UNITY_HAS_GOOGLEVR || UNITY_EDITOR
@@ -452,8 +483,15 @@ public class GvrViewer : MonoBehaviour {
       updatedToFrame = Time.frameCount;
       device.UpdateState();
 
-      if (device.profileChanged && distortionCorrectionEnabled) {
-        DistortionCorrectionEnabled = true;
+      if (device.profileChanged) {
+        if (distortionCorrection != DistortionCorrectionMethod.Native &&
+            device.RequiresNativeDistortionCorrection()) {
+          DistortionCorrection = DistortionCorrectionMethod.Native;
+        }
+        if (stereoScreen != null &&
+            device.ShouldRecreateStereoScreen(stereoScreen.width, stereoScreen.height)) {
+          StereoScreen = null;
+        }
       }
 
       DispatchEvents();
@@ -474,6 +512,15 @@ public class GvrViewer : MonoBehaviour {
     device.tilted = false;
     device.profileChanged = false;
     device.backButtonPressed = false;
+  }
+
+  /// Presents the #StereoScreen to the device for distortion correction and display.
+  /// @note This function is only used if #DistortionCorrection is set to _Native_,
+  /// and it only has an effect if the device supports it.
+  public void PostRender(RenderTexture stereoScreen) {
+    if (NativeDistortionCorrectionSupported && stereoScreen != null && stereoScreen.IsCreated()) {
+      device.PostRender(stereoScreen);
+    }
   }
 
   /// Resets the tracker so that the user's current direction becomes forward.
