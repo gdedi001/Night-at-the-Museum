@@ -26,13 +26,13 @@ public class WaypointMovement : MonoBehaviour {
 		if (!teleport) {
 			iTween.MoveTo (player, 
 				iTween.Hash (
-					"position", new Vector3 (waypoint.GetComponent<Transform> ().position.x, waypoint.GetComponent<Transform> ().position.y + height / 2, waypoint.GetComponent<Transform> ().position.z), 
+					"position", new Vector3 (waypoint.GetComponent<Transform>().position.x, waypoint.GetComponent<Transform>().position.y + height / 2, waypoint.GetComponent<Transform>().position.z), 
 					"time", .2F, 
 					"easetype", "linear"
 				)
 			);
 		} else {
-			player.transform.position = new Vector3 (waypoint.GetComponent<Transform> ().position.x, waypoint.GetComponent<Transform> ().position.y + height / 2, waypoint.GetComponent<Transform> ().position.z);
+			player.transform.position = new Vector3 (waypoint.GetComponent<Transform>().position.x, waypoint.GetComponent<Transform>().position.y + height / 2, waypoint.GetComponent<Transform>().position.z);
 		}
 	}
 
