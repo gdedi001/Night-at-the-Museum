@@ -12,15 +12,6 @@ public class WaypointMovement : MonoBehaviour {
 	public float maxMoveDistance = 10;
 	private bool moving = false;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void Move(GameObject waypoint) {
 		if (!teleport) {
