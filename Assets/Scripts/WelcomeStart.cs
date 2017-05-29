@@ -7,6 +7,8 @@ public class WelcomeStart : MonoBehaviour {
     public GameObject Canvas;
 
     public void Remove() {
+
+        Canvas.GetComponent<GvrAudioSource>().Play();
         Canvas.SetActive(false);
     }
 
