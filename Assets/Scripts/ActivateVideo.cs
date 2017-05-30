@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour {
+public class ActivateVideo : MonoBehaviour {
+
+    //public GameObject Model;
+    //public GameObject Video;
+
+    public void Activate(GameObject Video) {
+        Video.SetActive(true);
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +20,4 @@ public class Test : MonoBehaviour {
 	void Update () {
 		
 	}
-
-    public void test() {
-        Debug.Log("Clicked");
-    }
 }
