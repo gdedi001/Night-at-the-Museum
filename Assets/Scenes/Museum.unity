@@ -1679,6 +1679,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 100082724}
   m_Mesh: {fileID: 4300000, guid: 318fc5659f68549feb9d55d15a12de2a, type: 3}
+--- !u!1 &104802410 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 5cacad9667f03a14c9dc878eecc7abc3, type: 3}
+  m_PrefabInternal: {fileID: 1188855428}
+--- !u!114 &104802411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 104802410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!1 &109825151
 GameObject:
   m_ObjectHideFlags: 0
@@ -16520,7 +16537,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11414954, guid: 970dd4b9371394fb4890965f608d46fd, type: 2}
       propertyPath: vrModeEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11414954, guid: 970dd4b9371394fb4890965f608d46fd, type: 2}
       propertyPath: screenSize
@@ -22237,7 +22254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1898126906}
-  videoToPlay: {fileID: 32900000, guid: 3976737b0c4a38246be9b80fc4eede8d, type: 3}
+  videoToPlay: {fileID: 32900000, guid: fd7dab9173db47746b90600cdf588fab, type: 3}
 --- !u!114 &1898126906
 MonoBehaviour:
   m_ObjectHideFlags: 0
