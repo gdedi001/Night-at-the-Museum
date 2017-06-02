@@ -32,7 +32,7 @@ This was the first time I had the opportunity to build an entire mobile VR appli
 was a testiment to my dedication and organizational skills. I can't wait to continue on and complete the specializations within the nanodegree.
 
 ## Screenshots
-(Screenshots/WelcomeUI.PNG?raw=true "Starting Viewpoint")
-(Screenshots/Choosing.PNG?raw=true "Choose your sense")
-(Screenshots/eye.PNG?raw=true "Sight Exhibit")
-(Screenshots/Organization1.PNG?raw=true "Keeping things organized")
+![Alt text](/Screenshots/WelcomeUI.PNG?raw=true "Starting Viewpoint")
+![Alt text](/Screenshots/Choosing.PNG?raw=true "Choose your sense")
+![Alt text](/Screenshots/eye.PNG?raw=true "Sight Exhibit")
+![Alt text](/Screenshots/Organization1.PNG?raw=true "Keeping things organized")
