@@ -33,5 +33,6 @@ was a testiment to my dedication and organizational skills. I can't wait to cont
 
 ## Screenshots
 (/Screenshots/WelcomeUI.png?raw=true "Starting Viewpoint")
+(/Screenshots/Choosing.png?raw=true "Choose your sense")
 (/Screenshots/eye.png?raw=true "Sight Exhibit")
 (/Screenshots/Organization1.png?raw=true "Keeping things organized")
